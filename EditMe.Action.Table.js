@@ -23,8 +23,8 @@ EditMe.Action.Table.prototype = {
 
 	addColumn: function(){
 
-		$('thead tr').append('<th></th>');
-		$('tbody tr').append('<td></td>');
+		$('thead tr', this.editMe.element).append('<th></th>');
+		$('tbody tr', this.editMe.element).append('<td></td>');
 
 		this.editMe.updateView();
 

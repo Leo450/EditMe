@@ -9,6 +9,11 @@ EditMe.Action.Cell.prototype = {
 
 	setColor: function(color){
 
+		if(!this.editMe.selection.selectedCell || this.editMe.selection.selectedCell.element.tagName !== "TD"){
+			console.warn("Cannot set the color of a cell because there is no selected cell, or you're not in a TD element !");
+			return;
+		}
+
 		var $td = $(this.editMe.selection.selectedCell.element);
 
 		var hexColor = "";
@@ -27,7 +32,7 @@ EditMe.Action.Cell.prototype = {
 
 		$td.css("background-color", hexColor);
 		if(empty){
-			$td.empty();
+			$td.empty().append("<p>&nbsp;</p>");
 		}
 
 	}

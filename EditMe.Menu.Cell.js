@@ -23,28 +23,26 @@ EditMe.Menu.Cell.append = function(editMeMenuCell){
 	$container
 		.append($selectSetColor);
 
-	$('> *', $container)
-		.focusin(function(){
-			editMeMenuCell.editMe.selection.preserveSelectedCell();
-		})
-		.focusout(function(){
-			editMeMenuCell.editMe.selection.unsetSelectedCell();
-			editMeMenuCell.editMe.menu.update();
-		});
+	if(editMeMenuCell.editMe.settings.select2){
+		$selectSetColor.select2();
+	}
+
+	EditMe.Menu.preserveOnFocusin(editMeMenuCell, $container);
+	//EditMe.Menu.unsetOnFocusout(editMeMenuCell, $container);
 
 	editMeMenuCell.editMe.$element.before($container);
 
 };
 EditMe.Menu.Cell.update = function(editMeMenuCell){
 
-	var show = !!editMeMenuCell.editMe.selection.selectedCell;
+	var show = !!editMeMenuCell.editMe.selection.selectedCell && editMeMenuCell.editMe.selection.selectedCell.element.tagName === "TD";
 
 	if(show){
 
 		var color = "none";
-		var rgb = $(editMeMenuCell.editMe.selection.selectedCell.element).css("background-color");
+		var rgb = editMeMenuCell.editMe.selection.selectedCell.element.style.backgroundColor;
 		var rgbMatch = rgb.match(/\(([0-9 ,]+)\)/);
-		if(rgbMatch.length === 2){
+		if(rgb && rgbMatch.length === 2){
 			var rgbArr = rgbMatch[1].split(",");
 			if(rgbArr.length >= 3){
 				var r = parseInt(rgbArr[0].trim()).toString(16);
@@ -57,12 +55,14 @@ EditMe.Menu.Cell.update = function(editMeMenuCell){
 			}
 		}
 
-		var $selectedOption = $('.action-container__cell .action__set-color option[value="' + color.toLowerCase() + '"], .action-container__cell .action__set-color option[value="' + color.toUpperCase() + '"]');
-		if(!$selectedOption.length){
-			$selectedOption = $('.action-container__cell .action__set-color option[value="none"]');
-		}
+		var $select = $('.action-container__cell .action__set-color', editMeMenuCell.editMe.$element.parent());
+		var $selectedOption = $('option[value="' + color.toLowerCase() + '"], option[value="' + color.toUpperCase() + '"]', $select);
 
 		$selectedOption.prop("selected", true);
+
+		if(editMeMenuCell.editMe.settings.select2){
+			$select.trigger("change");
+		}
 
 	}
 

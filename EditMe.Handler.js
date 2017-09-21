@@ -17,7 +17,7 @@ EditMe.Handler.prototype = {
 
 		this.editMe.selection.unsetSelectedCell(medium);
 
-		if(!$(event.relatedTarget).parents('.action-container__cell').length){
+		if(!$(event.relatedTarget).parents('.action-container__cell, .action-container__column, .action-container__row').length){
 			this.editMe.menu.update();
 		}
 

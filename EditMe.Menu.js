@@ -32,3 +32,20 @@ EditMe.Menu.prototype = {
 	}
 
 };
+EditMe.Menu.preserveOnFocusin = function(editMeMenuChild, menuContainer){
+
+	$('> *', menuContainer)
+		.focusin(function(){
+			editMeMenuChild.editMe.selection.preserveSelectedCell();
+		});
+
+};
+EditMe.Menu.unsetOnFocusout = function(editMeMenuChild, menuContainer){
+
+	$('> *', menuContainer)
+		.focusout(function(){
+			editMeMenuChild.editMe.selection.unsetSelectedCell();
+			editMeMenuChild.editMe.menu.update();
+		});
+
+};

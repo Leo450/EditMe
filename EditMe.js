@@ -2,7 +2,7 @@ var EditMe = function(userSettings){
 
 	"use strict";
 
-	this.settings = $.extend(true, EditMe.defaultSettings, userSettings);
+	this.initSettings(userSettings);
 	this.element = this.settings.element;
 	this.$element = $(this.settings.element);
 	this.mediums = [];
@@ -18,7 +18,7 @@ var EditMe = function(userSettings){
 };
 EditMe.defaultSettings = {
 	element: null,
-	innerHTML: '<thead><tr><th></th></tr></thead><tbody><tr><td></td></tr></tbody>',
+	innerHTML: '<thead><tr><th><p>&nbsp;</p></th><th><p>&nbsp;</p></th></tr></thead><tbody><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td></tr></tbody>',
 	colors: [
 		{
 			name: "Red",
@@ -32,9 +32,21 @@ EditMe.defaultSettings = {
 			name: "Green",
 			hex: "#00AD58"
 		}
-	]
+	],
+	select2: true,
+	iconDir: ""
 };
 EditMe.prototype = {
+
+	initSettings: function(userSettings){
+
+		var settings = $.extend(true, EditMe.defaultSettings, userSettings);
+
+		settings.select2 = settings.select2 && $.fn.select2;
+
+		this.settings = settings;
+
+	},
 
 	updateView: function(){
 

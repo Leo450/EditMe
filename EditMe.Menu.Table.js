@@ -9,11 +9,11 @@ EditMe.Menu.Table.append = function(editMeMenuTable){
 
 	var $container = $('<div class="action-container__table"></div>');
 
-	var $addRowButton = $('<button class="action__add-row">Add Row</button>')
+	var $addRowButton = $('<button type="button" class="action__add-row"><img src="' + editMeMenuTable.editMe.settings.iconDir + '/add-row.svg" alt="Add Row"></button>')
 		.click(function(){
 			editMeMenuTable.editMe.action.table.addRow();
 		});
-	var $addColumnButton = $('<button class="action__add-column">Add Column</button>')
+	var $addColumnButton = $('<button type="button" class="action__add-column"><img src="' + editMeMenuTable.editMe.settings.iconDir + '/add-column.svg" alt="Add Column"></button>')
 		.click(function(){
 			editMeMenuTable.editMe.action.table.addColumn();
 		});
